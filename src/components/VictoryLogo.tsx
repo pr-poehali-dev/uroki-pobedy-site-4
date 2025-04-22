@@ -1,0 +1,109 @@
+import { useEffect, useState } from "react";
+
+interface VictoryLogoProps {
+  className?: string;
+  size?: "sm" | "md" | "lg" | "xl";
+}
+
+const VictoryLogo = ({ className = "", size = "md" }: VictoryLogoProps) => {
+  const [currentYear, setCurrentYear] = useState("");
+  const [currentTime, setCurrentTime] = useState("");
+  
+  useEffect(() => {
+    // Обновляем текущий год
+    const now = new Date();
+    setCurrentYear(now.getFullYear().toString());
+    
+    // Обновляем текущее время каждую секунду
+    const updateTime = () => {
+      const date = new Date();
+      const hours = date.getHours().toString().padStart(2, "0");
+      const minutes = date.getMinutes().toString().padStart(2, "0");
+      const seconds = date.getSeconds().toString().padStart(2, "0");
+      setCurrentTime(`${hours}:${minutes}:${seconds}`);
+    };
+    
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    
+    return () => clearInterval(interval);
+  }, []);
+  
+  const sizeClasses = {
+    sm: "w-16 h-16",
+    md: "w-24 h-24",
+    lg: "w-32 h-32",
+    xl: "w-40 h-40",
+  };
+  
+  return (
+    <div className={`relative ${sizeClasses[size]} ${className}`}>
+      <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+        <div className="w-full h-full relative">
+          {/* Основа логотипа - звезда */}
+          <svg viewBox="0 0 100 100" className="w-full h-full">
+            {/* Внешний круг */}
+            <circle 
+              cx="50" 
+              cy="50" 
+              r="48" 
+              fill="none" 
+              stroke="hsl(var(--victory-red))" 
+              strokeWidth="2" 
+              className="animate-pulse-gentle"
+            />
+            
+            {/* Внутренний круг */}
+            <circle 
+              cx="50" 
+              cy="50" 
+              r="42" 
+              fill="none" 
+              stroke="hsl(var(--victory-blue))" 
+              strokeWidth="1.5" 
+            />
+            
+            {/* Звезда */}
+            <path
+              d="M50 15 L57.5 35.5 L79 35.5 L62 49 L69.5 69.5 L50 56 L30.5 69.5 L38 49 L21 35.5 L42.5 35.5 Z"
+              fill="hsl(var(--victory-red))"
+              stroke="none"
+            />
+            
+            {/* Обводка для года */}
+            <path
+              d="M50 75 A5 5 0 0 1 50 85 A5 5 0 0 1 50 75"
+              fill="none"
+              stroke="hsl(var(--victory-blue))"
+              strokeWidth="1"
+              id="year-path"
+            />
+            
+            {/* Год */}
+            <text className="text-[6px] font-bold">
+              <textPath href="#year-path" startOffset="50%" textAnchor="middle">
+                2025
+              </textPath>
+            </text>
+            
+            {/* Лента */}
+            <path
+              d="M30 85 Q50 75 70 85"
+              fill="none"
+              stroke="hsl(var(--victory-red))"
+              strokeWidth="3"
+            />
+          </svg>
+        </div>
+      </div>
+      
+      {/* Текущее время (онлайн индикатор) */}
+      <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-xs bg-accent px-2 py-1 rounded-full text-secondary font-medium">
+        <span className="inline-block w-2 h-2 bg-green-500 rounded-full mr-1.5 animate-pulse"></span>
+        {currentTime}
+      </div>
+    </div>
+  );
+};
+
+export default VictoryLogo;

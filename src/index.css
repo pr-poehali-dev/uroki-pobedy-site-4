@@ -1,109 +1,86 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+ 
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 0 0% 3.9%;
+    
+    /* Патриотические цвета */
+    --victory-red: 0 100% 50%;
+    --victory-blue: 210 100% 50%;
+    --victory-neutral: 210 40% 96.1%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
+    --card-foreground: 0 0% 3.9%;
+ 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 354 70% 40%;
+    --popover-foreground: 0 0% 3.9%;
+ 
+    --primary: 0 80% 50%;  /* Красный цвет для акцентов */
     --primary-foreground: 210 40% 98%;
-
-    --secondary: 214 80% 45%;
+ 
+    --secondary: 210 80% 50%;  /* Синий цвет для дополнительных акцентов */
     --secondary-foreground: 210 40% 98%;
-
-    --accent: 214 30% 90%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
+ 
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
-
+ 
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 0 82% 40%;
+ 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
+    --ring: 0 80% 50%;
+ 
     --radius: 0.5rem;
-
-    --victory-red: 354 70% 40%;
-    --victory-blue: 214 80% 45%;
-    --victory-light: 0 0% 98%;
   }
-
+ 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 354 70% 50%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 214 80% 60%;
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+ 
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+ 
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+ 
+    --primary: 0 80% 50%;
+    --primary-foreground: 0 85.7% 97.3%;
+ 
+    --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
-
+ 
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 214 30% 20%;
-    --accent-foreground: 210 40% 98%;
-
+ 
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 0 85% 50%;
+ 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
+    --destructive-foreground: 0 85.7% 97.3%;
+ 
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --ring: 0 80% 50%;
   }
 }
-
+ 
 @layer base {
   * {
     @apply border-border;
   }
-
   body {
     @apply bg-background text-foreground;
   }
 }
 
-.text-gradient {
-  background: linear-gradient(to right, hsl(var(--primary)), hsl(var(--secondary)));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.patriotic-border {
-  position: relative;
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(to right, 
-      hsl(var(--victory-red)) 33%, 
-      hsl(var(--victory-blue)) 33%, 
-      hsl(var(--victory-blue)) 66%, 
-      hsl(var(--victory-light)) 66%
-    );
-  }
-}
-
+/* Анимации для сайта */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -115,18 +92,75 @@
   }
 }
 
+@keyframes pulseGentle {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes wave {
+  0% {
+    transform: translateX(0) translateZ(0) scaleY(1);
+  }
+  50% {
+    transform: translateX(-25%) translateZ(0) scaleY(0.8);
+  }
+  100% {
+    transform: translateX(-50%) translateZ(0) scaleY(1);
+  }
+}
+
 .animate-fadeInUp {
-  animation: fadeInUp 0.6s ease-out forwards;
+  animation: fadeInUp 0.8s ease forwards;
 }
 
-.animate-delay-100 {
-  animation-delay: 0.1s;
+.animate-pulse-gentle {
+  animation: pulseGentle 3s infinite ease-in-out;
 }
 
-.animate-delay-200 {
-  animation-delay: 0.2s;
+.wave-animation {
+  animation: wave 7s linear infinite;
 }
 
-.animate-delay-300 {
-  animation-delay: 0.3s;
+/* Патриотические стили */
+.flag-ribbon {
+  position: relative;
+  overflow: hidden;
+}
+
+.flag-ribbon::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(to right, 
+    hsl(var(--victory-white, 0 0% 100%)) 33.3%, 
+    hsl(var(--victory-blue)) 33.3%, 
+    hsl(var(--victory-blue)) 66.6%, 
+    hsl(var(--victory-red)) 66.6%);
+}
+
+.patriotic-gradient {
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.9) 0%, 
+    rgba(255, 255, 255, 0.6) 25%, 
+    rgba(30, 144, 255, 0.6) 50%, 
+    rgba(220, 20, 60, 0.6) 75%, 
+    rgba(220, 20, 60, 0.9) 100%);
+}
+
+.gold-text {
+  background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }

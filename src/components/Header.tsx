@@ -1,75 +1,104 @@
-import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
+import VictoryLogo from "./VictoryLogo";
 import { Menu, X } from "lucide-react";
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
+      if (window.scrollY > 10) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
     };
-    
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-  
+
+  const navLinks = [
+    { name: "Главная", href: "#" },
+    { name: "О проекте", href: "#about" },
+    { name: "Материалы", href: "#lessons" },
+    { name: "Мероприятия", href: "#events" },
+    { name: "Герои", href: "#heroes" },
+    { name: "Галерея", href: "#gallery" },
+  ];
+
   return (
-    <header className={`w-full fixed top-0 z-50 transition-all duration-300 patriotic-border ${
-      isScrolled ? "bg-background/95 backdrop-blur-sm shadow-md" : "bg-transparent"
-    }`}>
-      <div className="container mx-auto px-4 py-3">
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 flag-ribbon transition-all duration-300 ${
+        isScrolled
+          ? "bg-background/95 backdrop-blur-sm shadow-md py-2"
+          : "bg-transparent py-4"
+      }`}
+    >
+      <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="inline-flex items-center">
-              <div className="h-10 w-10 relative">
-                <div className="absolute inset-0 animate-float">
-                  <svg viewBox="0 0 24 24" className="w-full h-full">
-                    <path 
-                      d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" 
-                      fill="none" 
-                      stroke="currentColor" 
-                      strokeWidth="2" 
-                      strokeLinecap="round" 
-                      strokeLinejoin="round"
-                      className="text-primary"
-                    />
-                  </svg>
-                </div>
-              </div>
-              <span className="ml-2 text-lg font-bold text-gradient">Уроки Победы</span>
+          <Link to="/" className="flex items-center space-x-2">
+            <VictoryLogo size="sm" className="shrink-0" />
+            <div className="font-bold text-lg md:text-xl">
+              Уроки <span className="text-primary">Победы</span>
             </div>
-          </div>
-          
-          <nav className="hidden md:flex items-center space-x-6">
-            <a href="#" className="text-sm font-medium hover:text-primary transition-colors">Главная</a>
-            <a href="#about" className="text-sm font-medium hover:text-primary transition-colors">О проекте</a>
-            <a href="#lessons" className="text-sm font-medium hover:text-primary transition-colors">Материалы</a>
-            <a href="#events" className="text-sm font-medium hover:text-primary transition-colors">Мероприятия</a>
-            <Button>Присоединиться</Button>
-          </nav>
-          
-          <div className="md:hidden">
-            <Button variant="ghost" size="icon" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-              {isMenuOpen ? <X /> : <Menu />}
+          </Link>
+
+          {/* Десктопное меню */}
+          <nav className="hidden md:flex items-center space-x-1">
+            {navLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                className="px-3 py-2 text-sm font-medium rounded-md hover:bg-accent transition-colors"
+              >
+                {link.name}
+              </a>
+            ))}
+            <Button size="sm" variant="secondary" className="ml-2">
+              Войти
             </Button>
-          </div>
-        </div>
-      </div>
-      
-      {/* Mobile menu */}
-      {isMenuOpen && (
-        <div className="md:hidden bg-background border-t">
-          <nav className="flex flex-col space-y-3 p-4">
-            <a href="#" className="text-sm font-medium hover:text-primary transition-colors py-2">Главная</a>
-            <a href="#about" className="text-sm font-medium hover:text-primary transition-colors py-2">О проекте</a>
-            <a href="#lessons" className="text-sm font-medium hover:text-primary transition-colors py-2">Материалы</a>
-            <a href="#events" className="text-sm font-medium hover:text-primary transition-colors py-2">Мероприятия</a>
-            <Button className="w-full">Присоединиться</Button>
           </nav>
+
+          {/* Мобильное меню */}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="md:hidden"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? (
+              <X className="h-6 w-6" />
+            ) : (
+              <Menu className="h-6 w-6" />
+            )}
+          </Button>
         </div>
-      )}
+
+        {/* Мобильная навигация */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden py-4 animate-fadeInUp">
+            <nav className="flex flex-col space-y-2">
+              {navLinks.map((link) => (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  className="px-3 py-2 text-sm font-medium rounded-md hover:bg-accent transition-colors"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {link.name}
+                </a>
+              ))}
+              <Button size="sm" variant="secondary" className="mt-2">
+                Войти
+              </Button>
+            </nav>
+          </div>
+        )}
+      </div>
     </header>
   );
 };

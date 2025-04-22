@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowRight, Award, BookOpen, Calendar, FileText, Flag, Medal, Shield, Star, User } from "lucide-react";
+import { ArrowRight, Award, BookOpen, Calendar, FileText, Flag, MapPin, Medal, Shield, Star, User } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
 const Index = () => {

@@ -5,69 +5,64 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
-    
-    /* Патриотические цвета */
-    --victory-red: 0 100% 50%;
-    --victory-blue: 210 100% 50%;
-    --victory-neutral: 210 40% 96.1%;
+    --foreground: 222.2 84% 4.9%;
 
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
+    --card-foreground: 222.2 84% 4.9%;
  
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
+    --popover-foreground: 222.2 84% 4.9%;
  
-    --primary: 0 80% 50%;  /* Красный цвет для акцентов */
+    --primary: 0 84% 40%; /* Красный - основной цвет */
     --primary-foreground: 210 40% 98%;
  
-    --secondary: 210 80% 50%;  /* Синий цвет для дополнительных акцентов */
+    --secondary: 217 84% 40%; /* Синий - вторичный цвет */
     --secondary-foreground: 210 40% 98%;
  
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
  
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 0 82% 40%;
+    --accent: 15 90% 55%; /* Золотой акцент */
+    --accent-foreground: 222.2 47.4% 11.2%;
  
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 0 80% 50%;
+    --ring: 0 84% 40%;
  
     --radius: 0.5rem;
   }
  
   .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
  
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
  
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
  
-    --primary: 0 80% 50%;
-    --primary-foreground: 0 85.7% 97.3%;
+    --primary: 0 84% 40%;
+    --primary-foreground: 210 40% 98%;
  
-    --secondary: 217.2 32.6% 17.5%;
+    --secondary: 217 84% 40%;
     --secondary-foreground: 210 40% 98%;
  
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
  
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 0 85% 50%;
+    --accent: 15 90% 55%;
+    --accent-foreground: 210 40% 98%;
  
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 85.7% 97.3%;
+    --destructive-foreground: 210 40% 98%;
  
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 0 80% 50%;
+    --ring: 212.7 26.8% 83.9%;
   }
 }
  
@@ -80,7 +75,18 @@
   }
 }
 
-/* Анимации для сайта */
+/* Анимации для проекта "Уроки Победы" */
+@keyframes pulse-gentle {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+}
+
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -92,75 +98,63 @@
   }
 }
 
-@keyframes pulseGentle {
+@keyframes marquee {
   0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
+    transform: translateX(100%);
   }
   100% {
-    transform: scale(1);
+    transform: translateX(-100%);
   }
 }
 
-@keyframes wave {
-  0% {
-    transform: translateX(0) translateZ(0) scaleY(1);
+@keyframes pulse-border {
+  0%, 100% {
+    border-color: rgba(239, 68, 68, 0.5);
   }
   50% {
-    transform: translateX(-25%) translateZ(0) scaleY(0.8);
+    border-color: rgba(239, 68, 68, 1);
   }
-  100% {
-    transform: translateX(-50%) translateZ(0) scaleY(1);
-  }
-}
-
-.animate-fadeInUp {
-  animation: fadeInUp 0.8s ease forwards;
 }
 
 .animate-pulse-gentle {
-  animation: pulseGentle 3s infinite ease-in-out;
+  animation: pulse-gentle 3s infinite;
 }
 
-.wave-animation {
-  animation: wave 7s linear infinite;
+.animate-fadeInUp {
+  animation: fadeInUp 0.8s ease-out forwards;
 }
 
-/* Патриотические стили */
-.flag-ribbon {
-  position: relative;
-  overflow: hidden;
+.animate-marquee {
+  animation: marquee 30s linear infinite;
 }
 
-.flag-ribbon::before {
-  content: '';
+.pulse-border {
+  animation: pulse-border 2s ease-in-out infinite;
+}
+
+.running-text {
+  display: inline-block;
+  animation: marquee 30s linear infinite;
+}
+
+/* Стилизация для компонента LiveGallery */
+.live-indicator {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background: linear-gradient(to right, 
-    hsl(var(--victory-white, 0 0% 100%)) 33.3%, 
-    hsl(var(--victory-blue)) 33.3%, 
-    hsl(var(--victory-blue)) 66.6%, 
-    hsl(var(--victory-red)) 66.6%);
+  top: 10px;
+  right: 10px;
+  background-color: rgba(239, 68, 68, 0.9);
+  color: white;
+  font-size: 0.75rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  animation: pulse-gentle 2s infinite;
 }
 
+/* Патриотический градиент для заголовков */
 .patriotic-gradient {
-  background: linear-gradient(135deg, 
-    rgba(255, 255, 255, 0.9) 0%, 
-    rgba(255, 255, 255, 0.6) 25%, 
-    rgba(30, 144, 255, 0.6) 50%, 
-    rgba(220, 20, 60, 0.6) 75%, 
-    rgba(220, 20, 60, 0.9) 100%);
-}
-
-.gold-text {
-  background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+  background: linear-gradient(90deg, #e63946 0%, #457b9d 50%, #e63946 100%);
   -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   background-clip: text;
-  color: transparent;
-  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  text-fill-color: transparent;
 }
